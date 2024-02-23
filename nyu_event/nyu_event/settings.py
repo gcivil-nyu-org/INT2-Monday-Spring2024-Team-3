@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,12 +25,8 @@ SECRET_KEY = 'django-insecure--1vz#!np5i3v)p_(cclo9t8a40^ufcl#!tdkfq$p@6-=)ck@gf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['nyu-event2-dev.us-east-1.elasticbeanstalk.com','127.0.0.1']
-=======
-ALLOWED_HOSTS = []
->>>>>>> 81f35d1b2a41340dd675a637423ded7f09fb45f5
 
+ALLOWED_HOSTS = ['nyu-event2-dev.us-east-1.elasticbeanstalk.com','127.0.0.1']
 
 # Application definition
 
@@ -77,8 +73,6 @@ WSGI_APPLICATION = 'nyu_event.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-<<<<<<< HEAD
-
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
@@ -100,15 +94,8 @@ else:
                 'HOST': 'localhost',
                 'PORT': '5432',
         }
-=======
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
->>>>>>> 81f35d1b2a41340dd675a637423ded7f09fb45f5
-    }
-    
 
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
