@@ -51,4 +51,4 @@ deploy:
     env: "main"
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
-      branch: master  
+      branch: edit-travi  
