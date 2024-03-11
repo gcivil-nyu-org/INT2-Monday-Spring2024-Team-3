@@ -1,6 +1,6 @@
 branch-defaults:
   edit-travi:
-    environment: postgres
+    environment: postgres-dev
     group_suffix: null
 global:
   application_name: postgres
