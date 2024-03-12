@@ -11,6 +11,7 @@ admin.site.register(UserEvent)
 admin.site.register(Chat)
 admin.site.unregister(User)
 
+
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     pass
