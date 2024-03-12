@@ -41,7 +41,7 @@ deploy:
     env: "postgres-dev"
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
-      branch: develop  
+      branch: lock-and-suspend-user  
 
   - provider: elasticbeanstalk
     access_key_id: $AWS_ACCESS_KEY_ID

@@ -45,3 +45,7 @@ class Chat(models.Model):
     )
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class CustomUser(User):
+    is_locked = models.BooleanField(default=False)
+
