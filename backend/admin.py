@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import Event, Review, UserEvent, Chat, User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Permission
-from django.utils import TIME_ZONE
+from django.utils import timezone
 
 admin.site.register(Event)
 admin.site.register(Review)

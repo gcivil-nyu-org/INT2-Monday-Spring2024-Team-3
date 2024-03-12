@@ -15,11 +15,7 @@ from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.db.models import Q
-from django.http import JsonResponse, Http404
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
 from .utils import suspend_user
-from django.contrib.admin.views.decorators import staff_member_required
 
 
 def index(request):
