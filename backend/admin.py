@@ -24,4 +24,4 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 admin.site.unregister(User)  # Unregister the default User admin
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)  #
