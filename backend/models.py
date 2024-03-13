@@ -45,3 +45,10 @@ class Chat(models.Model):
     )
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_banned = models.BooleanField(default=False)
+    is_suspended = models.BooleanField(default=False)
+    suspension_end_date = models.DateField(null=True, blank=True)

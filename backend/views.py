@@ -15,7 +15,6 @@ from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.db.models import Q
-from .utils import suspend_user
 
 
 def index(request):
@@ -297,11 +296,3 @@ def view_interest_list(request):
         UserEvent.objects.filter(user=User.objects.get(pk=request.user.id))
     else:
         raise Http404("Unauthorized Operation")
-
-
-def suspend_user_view(request, username):
-    success, message = suspend_user(username)
-    if success:
-        return JsonResponse({"message": "User suspended successfully"})
-    else:
-        return JsonResponse({"error": message}, status=404)
