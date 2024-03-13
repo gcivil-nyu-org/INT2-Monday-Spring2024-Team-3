@@ -10,14 +10,28 @@ admin.site.register(Review)
 admin.site.register(UserEvent)
 admin.site.register(Chat)
 # Your UserProfile import here
+admin.site.register(BlockedUser)
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ("username", "email", "is_active", "is_staff", "is_superuser")
+    list_display = (
+        "username",
+        "email",
+        "is_active",
+        "is_staff",
+        "is_superuser",
+        "is_blocked",
+    )
     list_filter = ("is_active", "is_staff", "is_superuser")
     search_fields = ("username", "email")
 
     actions = ["block_users", "unblock_users"]
+
+    def is_blocked(self, obj):
+        return obj.blockeduser is not None
+
+    is_blocked.boolean = True
+    is_blocked.short_description = "Blocked"
 
     def block_users(self, request, queryset):
         for user in queryset:
