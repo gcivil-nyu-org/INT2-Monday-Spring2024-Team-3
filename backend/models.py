@@ -1,9 +1,9 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
-# Event model
 class Event(models.Model):
     title = models.CharField(max_length=100)
     category = models.CharField(max_length=1000, default="Category not defined")
@@ -47,8 +47,19 @@ class Chat(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_banned = models.BooleanField(default=False)
-    is_suspended = models.BooleanField(default=False)
-    suspension_end_date = models.DateField(null=True, blank=True)
+class BannedUser(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="banned_user"
+    )
+    banned_until = models.DateTimeField(null=True, blank=True)
+
+    def unban_user(self):
+        self.banned_until = None
+        self.save()
+
+    def extend_ban(self, days):
+        if self.banned_until is not None:
+            self.banned_until += timezone.timedelta(days=days)
+        else:
+            self.banned_until = timezone.now() + timezone.timedelta(days=days)
+        self.save()
