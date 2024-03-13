@@ -1,6 +1,6 @@
 # admin.py
 
-from .models import Event, Review, UserEvent, Chat, BannedUser
+from .models import Event, Review, UserEvent, Chat, BlockedUser
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -20,14 +20,21 @@ class CustomUserAdmin(UserAdmin):
     actions = ["block_users", "unblock_users"]
 
     def block_users(self, request, queryset):
-        queryset.update(is_active=False)
+        for user in queryset:
+            BlockedUser.objects.create(
+                user=user, reason="Your reason for blocking goes here"
+            )
+            user.is_active = False
+            user.save()
 
-    block_users.short_description = "lock user"
+    block_users.short_description = "lock"
 
     def unblock_users(self, request, queryset):
+        blocked_users = BlockedUser.objects.filter(user__in=queryset)
+        blocked_users.delete()
         queryset.update(is_active=True)
 
-    unblock_users.short_description = "suspend user"
+    unblock_users.short_description = "unlock"
 
 
 admin.site.unregister(User)
