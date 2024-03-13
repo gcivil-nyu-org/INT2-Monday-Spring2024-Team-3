@@ -1,19 +1,18 @@
 # admin.py
-
 from .models import Event, Review, UserEvent, Chat, BlockedUser
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+# Register models
 admin.site.register(Event)
 admin.site.register(Review)
 admin.site.register(UserEvent)
 admin.site.register(Chat)
-# Your UserProfile import here
-admin.site.register(BlockedUser)
 
 
+# Register BlockedUser model with custom admin options
 class BlockedUserAdmin(admin.ModelAdmin):
     list_display = ("user", "reason", "blocked_at", "end_at")
 
@@ -21,6 +20,7 @@ class BlockedUserAdmin(admin.ModelAdmin):
 admin.site.register(BlockedUser, BlockedUserAdmin)
 
 
+# Register CustomUserAdmin with custom user management options
 class CustomUserAdmin(UserAdmin):
     list_display = (
         "username",
@@ -42,15 +42,15 @@ class CustomUserAdmin(UserAdmin):
     is_blocked.short_description = "Blocked"
 
     def block_users(self, request, queryset):
-        end_at_input = input(" enter end date and time YYYY-MM-DD HH:MM:SS")
+        end_at_input = input("Enter end date and time (YYYY-MM-DD HH:MM:SS): ")
         end_at = timezone.datetime.strptime(end_at_input, "%Y-%m-%d %H:%M:%S")
-        reason = input("suspend reson:")
+        reason = input("Suspend reason: ")
         for user in queryset:
             BlockedUser.objects.create(user=user, reason=reason, end_at=end_at)
             user.is_active = False
             user.save()
 
-    block_users.short_description = "suspend"
+    block_users.short_description = "Suspend"
 
     def unblock_users(self, request, queryset):
         blocked_users = BlockedUser.objects.filter(user__in=queryset)
@@ -59,7 +59,7 @@ class CustomUserAdmin(UserAdmin):
                 blocked_user.delete()
         queryset.update(is_active=True)
 
-    unblock_users.short_description = "resume"
+    unblock_users.short_description = "Resume"
 
 
 admin.site.unregister(User)
