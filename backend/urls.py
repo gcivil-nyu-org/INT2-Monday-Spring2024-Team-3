@@ -19,5 +19,4 @@ urlpatterns = [
     # AJAX
     path("events/<int:event_id>/add-interest/", views.add_interest),
     path("events/<int:event_id>/remove-interest/", views.remove_interest),
-    path("suspend-user/<str:username>/", views.suspend_user_view, name="suspend_user"),
 ]
