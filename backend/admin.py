@@ -14,7 +14,12 @@ admin.site.register(Chat)
 
 # Register BlockedUser model with custom admin options
 class BlockedUserAdmin(admin.ModelAdmin):
-    list_display = ("user", "reason", "blocked_at", "end_at")
+    list_display = ("user", "reason", "blocked_at", "get_end_at")
+
+    def get_end_at(self, obj):
+        return obj.blockeduser.end_at if obj.blockeduser else None
+
+    get_end_at.short_description = "End at"
 
 
 admin.site.register(BlockedUser, BlockedUserAdmin)
