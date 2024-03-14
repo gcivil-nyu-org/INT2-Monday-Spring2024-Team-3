@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
 ]
 
 
-# Application definition
+# Application definitio
 
 INSTALLED_APPS = [
     "backend.apps.BackendConfig",
