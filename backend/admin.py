@@ -51,8 +51,6 @@ class UserAdmin(BaseUserAdmin):
 
     ban_user.short_description = "Ban selected users"
 
-    # Define unban_user method similarly to ban_user
-
     def suspend_user(self, request, queryset):
         for user in queryset:
             suspended_user, created = SuspendedUser.objects.get_or_create(
@@ -60,7 +58,7 @@ class UserAdmin(BaseUserAdmin):
                 defaults={
                     "reason": "Reason for suspension goes here",
                     "is_suspended": True,
-                },  # 默认设置用户为暂停状态
+                },
             )
             if created:
                 user.is_active = False
