@@ -1,6 +1,8 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 
 class Event(models.Model):
@@ -46,10 +48,32 @@ class Chat(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
-class BlockedUser(models.Model):
+class SuspendedUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reason = models.TextField()
-    blocked_at = models.DateTimeField(auto_now_add=True)
+    suspended_at = models.DateTimeField(auto_now_add=True)
+    unsuspended_at = models.DateTimeField(null=True, blank=True)
+    is_suspended = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
+
+    def unsuspend_user(self):
+        self.is_suspended = False
+        self.user.save()
+        self.delete()
+
+
+class BannedUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+    banned_at = models.DateTimeField(auto_now_add=True)
+    unban_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def unban_user(self):
+        self.user.is_active = True
+        self.user.save()
+        self.delete()

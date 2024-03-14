@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
 from django.template.loader import render_to_string
-from .models import Event, UserEvent
+from .models import Event, UserEvent, BannedUser
 from .forms import UserRegistrationForm
 from .tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
