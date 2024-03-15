@@ -128,14 +128,14 @@ class UserAdmin(BaseUserAdmin):
         "suspendeduser__is_suspended",
     )
 
-    def delete_model(self, request, obj):
-        suspended_user = SuspendedUser.objects.filter(user=obj).first()
-        if suspended_user:
-            suspended_user.delete()
-        banned_user = BannedUser.objects.filter(user=obj).first()
-        if banned_user:
-            banned_user.delete()
-        super().delete_model(request, obj)
+    def delete_queryset(self, request, queryset):
+        for user in queryset:
+            # 删除所有与该用户相关的 SuspendedUser
+            SuspendedUser.objects.filter(user=user).delete()
+            # 删除所有与该用户相关的 BannedUser
+            BannedUser.objects.filter(user=user).delete()
+        # 调用父类的 delete_queryset 方法删除用户
+        super().delete_queryset(request, queryset)
 
 
 admin.site.unregister(User)
