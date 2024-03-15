@@ -49,7 +49,7 @@ class Chat(models.Model):
 
 
 class SuspendedUser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     reason = models.TextField()
     suspended_at = models.DateTimeField(auto_now_add=True)
     unsuspended_at = models.DateTimeField(null=True, blank=True)
@@ -65,7 +65,7 @@ class SuspendedUser(models.Model):
 
 
 class BannedUser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     reason = models.TextField()
     banned_at = models.DateTimeField(auto_now_add=True)
     unban_at = models.DateTimeField(null=True, blank=True)
