@@ -5,11 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from .models import Event, Review, UserEvent, Chat, SuspendedUser, BannedUser
 from django.contrib import messages
 
-admin.site.register(Event)
-admin.site.register(Review)
-admin.site.register(UserEvent)
-admin.site.register(Chat)
-
 
 class SuspendedUserInline(admin.StackedInline):
     model = SuspendedUser
@@ -133,6 +128,15 @@ class UserAdmin(BaseUserAdmin):
         "suspendeduser__is_suspended",
     )
 
+    def delete_model(self, request, obj):
+        suspended_user = SuspendedUser.objects.filter(user=obj).first()
+        if suspended_user:
+            suspended_user.delete()
+        banned_user = BannedUser.objects.filter(user=obj).first()
+        if banned_user:
+            banned_user.delete()
+        super().delete_model(request, obj)
+
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
@@ -166,7 +170,7 @@ class SuspendedUserAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class BanneddUserAdmin(admin.ModelAdmin):
+class BannedUserAdmin(admin.ModelAdmin):
     list_display = [
         "get_username",
         "get_email",
@@ -193,5 +197,5 @@ class BanneddUserAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-admin.site.register(BannedUser, BanneddUserAdmin)
+admin.site.register(BannedUser, BannedUserAdmin)
 admin.site.register(SuspendedUser, SuspendedUserAdmin)
