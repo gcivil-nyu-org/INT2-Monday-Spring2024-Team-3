@@ -5,6 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from .models import Event, Review, UserEvent, Chat, SuspendedUser, BannedUser
 from django.contrib import messages
 
+admin.site.register(Event)
+admin.site.register(Review)
+admin.site.register(UserEvent)
+admin.site.register(Chat)
+
 
 class SuspendedUserInline(admin.StackedInline):
     model = SuspendedUser
@@ -128,15 +133,6 @@ class UserAdmin(BaseUserAdmin):
         "suspendeduser__is_suspended",
     )
 
-    def delete_queryset(self, request, queryset):
-        for user in queryset:
-            # 删除所有与该用户相关的 SuspendedUser
-            SuspendedUser.objects.filter(user=user).delete()
-            # 删除所有与该用户相关的 BannedUser
-            BannedUser.objects.filter(user=user).delete()
-        # 调用父类的 delete_queryset 方法删除用户
-        super().delete_queryset(request, queryset)
-
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
@@ -170,7 +166,7 @@ class SuspendedUserAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class BannedUserAdmin(admin.ModelAdmin):
+class BanneddUserAdmin(admin.ModelAdmin):
     list_display = [
         "get_username",
         "get_email",
@@ -197,5 +193,5 @@ class BannedUserAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-admin.site.register(BannedUser, BannedUserAdmin)
+admin.site.register(BannedUser, BanneddUserAdmin)
 admin.site.register(SuspendedUser, SuspendedUserAdmin)
