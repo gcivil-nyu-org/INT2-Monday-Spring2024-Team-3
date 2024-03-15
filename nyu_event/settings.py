@@ -103,10 +103,10 @@ else:
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
             "NAME": "nyu_event",
-            "USER": "postgres",
+            "USER": "nyu_event",
             "PASSWORD": "complexpassword123",
             "HOST": "localhost",
-            "PORT": "5432",
+            "PORT": "5433",
         }
     }
 
@@ -139,7 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "static/admin"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
