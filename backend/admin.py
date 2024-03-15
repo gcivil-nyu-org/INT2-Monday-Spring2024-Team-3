@@ -52,28 +52,25 @@ class UserAdmin(BaseUserAdmin):
 
     ban_user.short_description = "Ban selected users"
 
-    
     def unban_user(self, request, queryset):
-     for user in queryset:
-        banned_user = BannedUser.objects.filter(user=user).first()
-        if banned_user:
-            banned_user.delete()
-            user.is_active = True
-            user.save()
-            self.message_user(
-                request, f"User {user.username} has been unbanned successfully."
-            )
-        else:
-            self.message_user(
-                request,
-                f"User {user.username} is not currently banned.",
-                level=messages.WARNING,
-            )
+        for user in queryset:
+            banned_user = BannedUser.objects.filter(user=user).first()
+            if banned_user:
+                banned_user.delete()
+                user.is_active = True
+                user.save()
+                self.message_user(
+                    request, f"User {user.username} has been unbanned successfully."
+                )
+            else:
+                self.message_user(
+                    request,
+                    f"User {user.username} is not currently banned.",
+                    level=messages.WARNING,
+                )
 
     unban_user.short_description = "Unban selected users"
-    
-    
-    
+
     def suspend_user(self, request, queryset):
         for user in queryset:
             suspended_user, created = SuspendedUser.objects.get_or_create(
@@ -168,6 +165,7 @@ class SuspendedUserAdmin(admin.ModelAdmin):
             kwargs["queryset"] = User.objects.filter(is_active=False)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+
 class BanneddUserAdmin(admin.ModelAdmin):
     list_display = [
         "get_username",
@@ -193,8 +191,6 @@ class BanneddUserAdmin(admin.ModelAdmin):
         if db_field.name == "user":
             kwargs["queryset"] = User.objects.filter(is_active=False)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-
 
 
 admin.site.register(BannedUser, BanneddUserAdmin)
