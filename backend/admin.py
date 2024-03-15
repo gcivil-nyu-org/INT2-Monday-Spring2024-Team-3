@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from .models import Event, Review, UserEvent, Chat, SuspendedUser, BannedUser
+from django.contrib import messages
 
 admin.site.register(Event)
 admin.site.register(Review)
@@ -46,11 +47,33 @@ class UserAdmin(BaseUserAdmin):
                 self.message_user(
                     request,
                     f"User {user.username} is already banned.",
-                    level=admin.WARNING,
+                    level=messages.WARNING,
                 )
 
     ban_user.short_description = "Ban selected users"
 
+    
+    def unban_user(self, request, queryset):
+     for user in queryset:
+        banned_user = BannedUser.objects.filter(user=user).first()
+        if banned_user:
+            banned_user.delete()
+            user.is_active = True
+            user.save()
+            self.message_user(
+                request, f"User {user.username} has been unbanned successfully."
+            )
+        else:
+            self.message_user(
+                request,
+                f"User {user.username} is not currently banned.",
+                level=messages.WARNING,
+            )
+
+    unban_user.short_description = "Unban selected users"
+    
+    
+    
     def suspend_user(self, request, queryset):
         for user in queryset:
             suspended_user, created = SuspendedUser.objects.get_or_create(
@@ -70,7 +93,7 @@ class UserAdmin(BaseUserAdmin):
                 self.message_user(
                     request,
                     f"User {user.username} is already suspended.",
-                    level=admin.WARNING,
+                    level=messages.WARNING,
                 )
 
     suspend_user.short_description = "Suspend selected users"
@@ -87,7 +110,7 @@ class UserAdmin(BaseUserAdmin):
                 self.message_user(
                     request,
                     f"User {user.username} is not suspended.",
-                    level=admin.WARNING,
+                    level=messages.WARNING,
                 )
 
     unsuspend_user.short_description = "Unsuspend selected users"
@@ -127,7 +150,33 @@ class SuspendedUserAdmin(admin.ModelAdmin):
         "unsuspended_at",
         "is_suspended",
     ]
-    list_filter = ["suspended_at", "unsuspended_at", "is_suspended", "user__is_active"]
+    list_filter = ["suspended_at", "unsuspended_at", "is_suspended"]
+
+    def get_username(self, obj):
+        return obj.user.username
+
+    get_username.admin_order_field = "user__username"
+
+    def get_email(self, obj):
+        return obj.user.email
+
+    get_email.admin_order_field = "user__email"
+    get_email.short_description = "Email"
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "user":
+            kwargs["queryset"] = User.objects.filter(is_active=False)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+class BanneddUserAdmin(admin.ModelAdmin):
+    list_display = [
+        "get_username",
+        "get_email",
+        "reason",
+        "banned_at",
+        "unban_at",
+    ]
+    list_filter = ["banned_at", "unban_at"]
 
     def get_username(self, obj):
         return obj.user.username
@@ -146,4 +195,7 @@ class SuspendedUserAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
+
+
+admin.site.register(BannedUser, BanneddUserAdmin)
 admin.site.register(SuspendedUser, SuspendedUserAdmin)
