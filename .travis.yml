@@ -27,7 +27,8 @@ script:
   - python manage.py migrate
   - python manage.py test
   - coverage run manage.py test  
-  - coverage report  
+  - coverage report
+  - python manage.py collectstatic  
 after_success:
   - coveralls
 
@@ -42,7 +43,7 @@ deploy:
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     skip_cleanup: true
     on:
-      branch: develop  
+      branch: test-suspend 
 
   - provider: elasticbeanstalk
     access_key_id: $AWS_ACCESS_KEY_ID
