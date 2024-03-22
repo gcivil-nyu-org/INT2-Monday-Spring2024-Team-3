@@ -28,7 +28,7 @@ script:
   - python manage.py test
   - coverage run manage.py test  
   - coverage report
-  - python manage.py collectstatic  
+  - python manage.py collectstatic --noinput
 after_success:
   - coveralls
 
