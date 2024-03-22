@@ -40,7 +40,6 @@ deploy:
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
       branches:
-        only:
           - testenv
 
   - provider: elasticbeanstalk
@@ -52,5 +51,4 @@ deploy:
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
       branches:
-        only:
           - master
