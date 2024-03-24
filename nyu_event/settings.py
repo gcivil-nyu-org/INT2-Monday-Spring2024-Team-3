@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "main2.us-east-1.elasticbeanstalk.com",
     "postgres-dev.us-east-1.elasticbeanstalk.com",
+    "172.31.88.14",
 ]
 
 
