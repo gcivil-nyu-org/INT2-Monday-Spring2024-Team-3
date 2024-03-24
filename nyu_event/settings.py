@@ -86,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "nyu_event.wsgi.application"
 ASGI_APPLICATION = "nyu_event.asgi.application"
-# ASGI_APPLICATION = 'room.routing.application'
 
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
