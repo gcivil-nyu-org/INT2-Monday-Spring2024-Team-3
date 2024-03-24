@@ -40,7 +40,7 @@ deploy:
     env: "postgres-dev"
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
-      branch: chat_app_djangoChannel
+      branch: django_group_chat
 
   - provider: elasticbeanstalk
     access_key_id: $AWS_ACCESS_KEY_ID
