@@ -41,7 +41,9 @@ deploy:
     env: "postgres-dev"
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
-      branch: develop  
+      branches:
+        only:
+          - develop
 
   - provider: elasticbeanstalk
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -51,4 +53,6 @@ deploy:
     env: "main"
     bucket_name: "elasticbeanstalk-us-east-1-891377257918"
     on:
-      branch: master  
+      branches:
+        only:
+          - master
