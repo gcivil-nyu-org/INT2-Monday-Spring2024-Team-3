@@ -61,8 +61,5 @@ urlpatterns = [
   
     path("search_user/", views.chatHandler.search_users, name="search_users"),
 
-    # chat app urls
-    path("chat", views.base.frontpage, name="frontpage"),
-    path("rooms/", include("room.urls")),
-    path("<slug:slug>/", room.views.room, name="chat_room"),
+ 
 ]
