@@ -2,6 +2,8 @@ from .base import (
     index,
     user_detail,
     event_detail,
+    profile_edit,
+    interest_list,
     search_results,
     index_with_categories_view,
     events_by_category,
