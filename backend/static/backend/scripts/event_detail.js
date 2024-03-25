@@ -100,6 +100,7 @@ postButton.addEventListener("click", function () {
     return response.json(); 
   })
   .then(data => {
+    if (data.success) {
     showTemporaryMessage("Thank you for your review!", "alert-success");
     modal.style.display = "none";
     document.getElementById("review-text").value = '';
@@ -108,7 +109,7 @@ postButton.addEventListener("click", function () {
     });
     updateAverageRating(eventId);
     resetReviewForm();
-  })
+  }})
   .catch(error => {
     console.error('Error:', error);
     const errorMsg = document.createElement("div");
@@ -139,3 +140,29 @@ function resetReviewForm() {
   document.getElementById("messages-container").innerHTML = '';
 }
 
+function updateAverageRating(eventId) {
+  fetch(`/event/${eventId}/avg_rating`, {
+    method: 'GET',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    credentials: 'same-origin',
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const avgRatingElement = document.getElementById("average-rating");
+    if (data.avg_rating !== undefined) {
+      avgRatingElement.textContent = data.avg_rating.toFixed(2);
+    } else {
+      avgRatingElement.textContent = "Not rated yet";
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}

@@ -1,7 +1,8 @@
+
 dist: jammy
 language: python
 python:
-  - "3.8"  # Use the development version of Python 3.8
+  - "3.8" # Use the development version of Python 3.8
 
 env:
   - DJANGO_SETTINGS_MODULE="nyu_event.settings"
@@ -11,7 +12,6 @@ install:
 
 services:
   - postgresql
-
 
 before_script:
   - psql -c 'create database nyu_event;' -U postgres
@@ -26,11 +26,10 @@ script:
   - flake8 .
   - python manage.py migrate
   - python manage.py test
-  - coverage run manage.py test  
-  - coverage report  
+  - coverage run manage.py test
+  - coverage report
 after_success:
   - coveralls
-
 
 deploy:
   - provider: elasticbeanstalk
