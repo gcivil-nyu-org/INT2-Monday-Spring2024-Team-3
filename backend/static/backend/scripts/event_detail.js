@@ -108,7 +108,7 @@ postButton.addEventListener("click", function () {
     });
     updateAverageRating(eventId);
     resetReviewForm();
-  }})
+  })
   .catch(error => {
     console.error('Error:', error);
     const errorMsg = document.createElement("div");
