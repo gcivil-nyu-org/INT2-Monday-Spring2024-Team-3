@@ -45,10 +45,10 @@
       </div>
     </div>
   </div>
-                  {% empty %}
-                    <li>No search history found.</li>
-                {% endfor %}
-  <a class="btn btn-outline-dark" href="{% url 'clear_history' %}">Clear History</a>
+  {% empty %}
+  No search history found.
+  {% endfor %}
+  
   
 
   {% endblock%}

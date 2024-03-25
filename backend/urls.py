@@ -34,4 +34,5 @@ urlpatterns = [
         "events/<int:event_id>/remove-interest/",
         views.interest_list_handlers.remove_interest,
     ),
+    path('recent_searches/', views.base.recent_searches, name='recent_searches'),
 ]

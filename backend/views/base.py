@@ -86,6 +86,7 @@ def search_results(request):
     users = User.objects.none()
 
     if search_query:
+        SearchHistory.objects.create(user=request.user, search=search_query,search_type=search_type)
         if search_type == "Shows":
             if availability_filter != "All":
                 if availability_filter == "Past":
@@ -128,6 +129,12 @@ def clear_history_view(request):
     SearchHistory.objects.filter(user=request.user).delete()
     return redirect("search_history")
 
+def recent_searches(request):
+    if request.user.is_authenticated:
+        recent_searches = SearchHistory.objects.filter(user=request.user).order_by('-timestamp')[:5]  # Get the last 5 searches
+        searches = [search.query for search in recent_searches]
+        return JsonResponse({'recent_searches': searches})
+    return JsonResponse({'recent_searches': []})
 
 EVENT_CATEGORIES = [
     "Musical",
