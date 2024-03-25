@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import ssl
 from dotenv import load_dotenv
+
 from os.path import join, dirname
 
 load_dotenv(join(dirname(__file__), ".env"))
@@ -47,7 +48,10 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
+    "channels",
+    "room",
 ]
 
 MIDDLEWARE = [
@@ -82,11 +86,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "nyu_event.wsgi.application"
+ASGI_APPLICATION = "nyu_event.asgi.application"
+# ASGI_APPLICATION = 'room.routing.application'
+
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 
 if "RDS_DB_NAME" in os.environ:
     DATABASES = {
@@ -161,4 +168,6 @@ EMAIL_HOST_USER = "nyuevents24@gmail.com"
 EMAIL_HOST_PASSWORD = "ogtoqvpmcniroelh"
 
 DEFAULT_FROM_EMAIL = "nyuevents24@gmail.com"
+
 # roll back to previous version
+
