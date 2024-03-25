@@ -43,7 +43,6 @@ def event_detail(request, event_id):
             "category": category,
             "loggedIn": loggedIn,
             "interested": interested,
-            "avg_rating": avg_rating,
         },
     )
 
