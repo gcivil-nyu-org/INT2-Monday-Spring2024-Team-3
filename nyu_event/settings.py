@@ -14,8 +14,10 @@ from pathlib import Path
 import os
 import ssl
 from dotenv import load_dotenv
+from dotenv import load_dotenv
 from os.path import join, dirname
 
+load_dotenv(join(dirname(__file__), ".env"))
 load_dotenv(join(dirname(__file__), ".env"))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -160,4 +162,3 @@ EMAIL_HOST_USER = "nyuevents24@gmail.com"
 EMAIL_HOST_PASSWORD = "ogtoqvpmcniroelh"
 
 DEFAULT_FROM_EMAIL = "nyuevents24@gmail.com"
-
