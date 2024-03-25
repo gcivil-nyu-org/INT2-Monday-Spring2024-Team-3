@@ -37,6 +37,5 @@ urlpatterns = [
     path(
         "events/<int:event_id>/remove-interest/",
         views.interest_list_handlers.remove_interest,
-        name="interest_list_handlers.remove_interest",
     ),
 ]

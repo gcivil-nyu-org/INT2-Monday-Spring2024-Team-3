@@ -100,7 +100,6 @@ postButton.addEventListener("click", function () {
     return response.json(); 
   })
   .then(data => {
-    if (data.success) {
     showTemporaryMessage("Thank you for your review!", "alert-success");
     modal.style.display = "none";
     document.getElementById("review-text").value = '';

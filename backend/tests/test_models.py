@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from backend.models import Event, Review, UserEvent, Chat, SearchHistory
+from backend.models import Event, Review, UserEvent, Chat, SearchHistory
 from django.urls import reverse
 import datetime
 
