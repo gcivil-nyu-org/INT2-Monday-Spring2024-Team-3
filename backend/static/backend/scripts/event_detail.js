@@ -141,4 +141,3 @@ function resetReviewForm() {
   // Clear any messages that might be inside the modal
   document.getElementById("messages-container").innerHTML = '';
 }
-
