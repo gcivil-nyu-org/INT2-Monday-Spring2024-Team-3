@@ -147,3 +147,4 @@ class TestBannedUserAdmin(TestCase):
         user = User.objects.create(username="test_user", email="ty@nyu.edu")
         banned_user = BannedUser.objects.create(user=user)
         self.assertEqual(self.banned_user_admin.get_email(banned_user), "ty@nyu.edu")
+# roll back to previous version

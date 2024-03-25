@@ -196,3 +196,4 @@ class BanneddUserAdmin(admin.ModelAdmin):
 
 admin.site.register(BannedUser, BanneddUserAdmin)
 admin.site.register(SuspendedUser, SuspendedUserAdmin)
+# roll back to previous version

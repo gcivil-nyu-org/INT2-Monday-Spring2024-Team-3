@@ -34,3 +34,4 @@ def post_review(request, event_id):
     return JsonResponse(
         {"success": True, "review_id": review.id, "new_avg_rating": new_avg_rating}
     )
+# roll back to previous version

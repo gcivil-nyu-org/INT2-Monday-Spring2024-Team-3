@@ -47,3 +47,4 @@ urlpatterns = [
         name="interest_list_handlers.remove_interest",
     ),
 ]
+# roll back to previous version

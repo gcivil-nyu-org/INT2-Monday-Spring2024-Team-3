@@ -49,3 +49,4 @@ class UpdateProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UpdateProfileForm, self).__init__(*args, **kwargs)
         self.fields["avatar"].required = False
+# roll back to previous version

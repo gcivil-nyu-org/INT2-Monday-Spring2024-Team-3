@@ -7,3 +7,4 @@ class BackendConfig(AppConfig):
 
     def ready(self):
         import backend.signals  # noqa
+# roll back to previous version

@@ -95,3 +95,4 @@ class TestUrls(TestCase):
     def test_search_history_url(self):
         view = resolve("/user/search_history/")
         self.assertEqual(view.func, views.base.search_history)
+# roll back to previous version

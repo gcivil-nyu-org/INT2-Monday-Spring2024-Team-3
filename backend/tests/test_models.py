@@ -230,3 +230,4 @@ class BannedUserModelTest(TestCase):
         self.banned_user.unban_user()
         with self.assertRaises(BannedUser.DoesNotExist):
             BannedUser.objects.get(user=self.user)
+# roll back to previous version

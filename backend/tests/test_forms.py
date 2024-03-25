@@ -56,3 +56,4 @@ class UserRegistrationFormTest(TestCase):
         self.assertIn(
             "username", form.errors
         )  # Error should be associated with 'username'
+# roll back to previous version

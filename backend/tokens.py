@@ -12,3 +12,4 @@ class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
 
 
 account_activation_token = AccountActivationTokenGenerator()
+# roll back to previous version

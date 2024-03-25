@@ -54,3 +54,4 @@ def remove_interest(request, event_id):
         return JsonResponse({"message": "removed from the interest list"})
     else:
         raise Http404("Unauthorized Operation")
+# roll back to previous version

@@ -49,3 +49,4 @@ urlpatterns = [
         name="password_reset_complete",
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# roll back to previous version

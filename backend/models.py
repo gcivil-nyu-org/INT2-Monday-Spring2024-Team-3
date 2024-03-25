@@ -103,3 +103,4 @@ class BannedUser(models.Model):
         self.user.is_active = True
         self.user.save()
         self.delete()
+# roll back to previous version
