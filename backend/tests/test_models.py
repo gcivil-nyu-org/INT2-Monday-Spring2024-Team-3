@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 from unittest.mock import mock_open, patch
 from django.core.files.uploadedfile import SimpleUploadedFile
