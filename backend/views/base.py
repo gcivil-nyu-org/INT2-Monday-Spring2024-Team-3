@@ -325,9 +325,10 @@ def logout_user(request):
 def frontpage(request):
     return render(request, "chat/frontpage.html")
 
+
 def import_rooms(request):
 
-    event_titles = Event.objects.values_list('title', flat=True)
+    event_titles = Event.objects.values_list("title", flat=True)
 
     pattern = r"[^a-zA-Z0-9\s]"
 
@@ -343,6 +344,4 @@ def import_rooms(request):
         else:
             room_name = "_".join(title_split[:])
 
-        Room.objects.create(
-            name=title, slug=room_name.lower()
-        )
+        Room.objects.create(name=title, slug=room_name.lower())
