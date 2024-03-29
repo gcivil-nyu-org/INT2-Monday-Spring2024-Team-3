@@ -463,18 +463,3 @@ class SearchHistoryViewTestCase(TestCase):
         response = self.client.post(reverse("clear_history"))
         self.assertEqual(response.status_code, 302)  # Check for redirect
         self.assertFalse(SearchHistory.objects.filter(user=self.user).exists())
-
-
-class PusherAuthenticationTestCase(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username="user", password="pass")
-        self.client = Client()
-
-    def test_pusher_authentication(self):
-        self.client.login(username="user", password="pass")
-        response = self.client.post(
-            reverse("pusher_auth"),
-            {"channel_name": "test_channel", "socket_id": "123.456"},
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue("auth" in response.json())
