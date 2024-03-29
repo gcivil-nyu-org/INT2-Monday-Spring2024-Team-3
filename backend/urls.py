@@ -54,4 +54,6 @@ urlpatterns = [
     path("rooms/", include("room.urls")),
     path("", room.views.rooms, name="chat_room_list"),
     path("<slug:slug>/", room.views.room, name="chat_room"),
+
+    path("import_rooms",views.base.import_rooms, name="import rooms")
 ]

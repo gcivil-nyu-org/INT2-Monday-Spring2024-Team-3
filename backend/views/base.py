@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.template.loader import render_to_string
 from ..models import Event, UserEvent, SearchHistory, Review
+from room.models import Room
 from ..forms import UserRegistrationForm
 from ..tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
@@ -323,3 +324,25 @@ def logout_user(request):
 
 def frontpage(request):
     return render(request, "chat/frontpage.html")
+
+def import_rooms(request):
+
+    event_titles = Event.objects.values_list('title', flat=True)
+
+    pattern = r"[^a-zA-Z0-9\s]"
+
+    for title in event_titles:
+        cleaned_title = re.sub(pattern, "", title)
+
+        title_split = cleaned_title.split()
+
+        room_name = ""
+
+        if len(title_split) >= 3:
+            room_name = "_".join(title_split[:3])
+        else:
+            room_name = "_".join(title_split[:])
+
+        Room.objects.create(
+            name=title, slug=room_name.lower()
+        )
