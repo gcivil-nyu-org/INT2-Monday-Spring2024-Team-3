@@ -464,6 +464,7 @@ class SearchHistoryViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)  # Check for redirect
         self.assertFalse(SearchHistory.objects.filter(user=self.user).exists())
 
+
 class PusherAuthenticationTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="user", password="pass")
