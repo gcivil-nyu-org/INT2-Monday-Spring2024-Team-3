@@ -86,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "nyu_event.wsgi.application"
 ASGI_APPLICATION = "nyu_event.asgi.application"
-# ASGI_APPLICATION = 'room.routing.application'
 
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
@@ -112,8 +111,7 @@ else:
             "ENGINE": "django.db.backends.postgresql_psycopg2",
             "NAME": "nyu_event",
             "USER": "postgres",
-            # "PASSWORD": "complexpassword123",
-            "PASSWORD": "sansid22",
+            "PASSWORD": "complexpassword123",
             "HOST": "localhost",
             "PORT": "5432",
         }
