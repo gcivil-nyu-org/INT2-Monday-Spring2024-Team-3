@@ -45,6 +45,8 @@
         + '/'
     );
 
+    console.log('roomsname: ',roomName, 'username: ',userName,'chatsocket: ',chatSocket)
+
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
 
