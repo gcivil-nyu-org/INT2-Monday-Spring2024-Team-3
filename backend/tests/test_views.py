@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from backend.models import Event, User, UserEvent, SearchHistory, Review
+from backend.models import Event, User, UserEvent, SearchHistory, Review, Chat
 from django.core import mail
 from django.contrib.messages import get_messages
 from django.contrib.auth.tokens import default_token_generator
@@ -518,3 +518,57 @@ class SearchInputTemplateTest(TestCase):
         self.assertContains(response, 'id="recent-searches-dropdown"')
         recent_searches_url = reverse("recent_searches")
         self.assertContains(response, f"fetch('{recent_searches_url}')")
+
+
+class Chat_1to1_Tests(TestCase):
+    def setUp(self):
+        # Create two users
+        self.user1 = User.objects.create_user(
+            username="user1", password="user1password"
+        )
+        self.user2 = User.objects.create_user(
+            username="user2", password="user2password"
+        )
+        self.client.login(username="user1", password="user1password")
+
+    def test_chat_index_view(self):
+        # Ensure user is logged in
+        self.client.login(username="user1", password="user1password")
+        # Get response from chat index view
+        response = self.client.get(reverse("chat_index"))
+        # Check if the view returns a 200 status code
+        self.assertEqual(response.status_code, 200)
+        # Check if the correct template was used
+        self.assertTemplateUsed(response, "chat_index.html")
+
+    def test_get_chat_view(self):
+        Chat.objects.create(sender=self.user1, receiver=self.user2, message="Hello!")
+
+        response = self.client.get(reverse("get_chat"), {"user_id": self.user2.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Hello!")
+
+    def test_send_message_view(self):
+        response = self.client.post(
+            reverse("send_message"), {"receiver_id": self.user2.id, "message": "Hello!"}
+        )
+        self.assertEqual(response.status_code, 200)
+
+        messages = Chat.objects.filter(sender=self.user1, receiver=self.user2)
+        self.assertEqual(messages.count(), 1)
+        self.assertEqual(messages[0].message, "Hello!")
+
+
+class PusherAuthenticationTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="user", password="pass")
+        self.client = Client()
+
+    def test_pusher_authentication(self):
+        self.client.login(username="user", password="pass")
+        response = self.client.post(
+            reverse("pusher_auth"),
+            {"channel_name": "test_channel", "socket_id": "123.456"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("auth" in response.json())

@@ -2,6 +2,9 @@ from django.urls import include, path
 
 from . import views
 
+from backend.views import group_chat_handlers
+from backend.views import chat_handlers
+
 # app_name = 'backend'
 urlpatterns = [
     path("login", views.base.login_user, name="login"),
@@ -29,6 +32,41 @@ urlpatterns = [
         "events/<int:event_id>/display-reviews/",
         views.review_handlers.get_reviews_for_event,
         name="event_reviews",
+    ),
+    path(
+        "events/<int:event_id>/display-reviews/<int:review_id>/likes/",
+        views.review_handlers.like_review,
+        name="like_review",
+    ),
+    path(
+        "events/<int:event_id>/display-reviews/<int:review_id>/unlike/",
+        views.review_handlers.unlike_review,
+        name="unlike_review",
+    ),
+    path(
+        "events/<int:event_id>/display-reviews/<int:review_id>/delete/",
+        views.review_handlers.delete_review,
+        name="delete_review",
+    ),
+    path(
+        "users/<str:username>/reviewhistory/",
+        views.review_handlers.get_user_reviews,
+        name="reviewhistory",
+    ),
+    path(
+        "users/<str:username>/reviewhistory/<int:review_id>/delete/",
+        views.review_handlers.delete_reviewhistory,
+        name="delete_reviewhistory",
+    ),
+    path(
+        "events/<int:event_id>/display-reviews/<int:review_id>/reply/",
+        views.review_handlers.reply_to_review,
+        name="reply_to_review",
+    ),
+    path(
+        "events/<int:event_id>/display-reviews/<int:review_id>/display-replies/",
+        views.review_handlers.get_replies_for_review,
+        name="display_replies",
     ),
     path("users/<str:username>/", views.base.user_detail, name="user_detail"),
     path("profile-edit/", views.profile_handlers.profile_edit, name="profile_edit"),
@@ -59,4 +97,24 @@ urlpatterns = [
         name="interest_list_handlers.remove_interest",
     ),
     path("recent_searches/", views.base.recent_searches, name="recent_searches"),
+    # chat1-1
+    path("chat/", views.chat_handlers.chat_index, name="chat_index"),
+    path(
+        "chat/send_message/",
+        views.chat_handlers.send_message,
+        name="send_message",
+    ),
+    path("chat/get_chat/", views.chat_handlers.get_chat, name="get_chat"),
+    # group chat
+    path("rooms/", views.group_chat_handlers.group_chat_index, name="search_rooms"),
+    path(
+        "chat/<str:receiver_room_slug>/",
+        views.group_chat_handlers.chat_with_room,
+        name="chat_with_room",
+    ),
+    path(
+        "chat/<str:receiver_room_slug>/send_message/",
+        views.group_chat_handlers.send_message,
+        name="send_message",
+    ),
 ]

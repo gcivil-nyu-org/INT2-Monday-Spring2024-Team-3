@@ -32,10 +32,10 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['*','nyu-event-dev.us-east-1.elasticbeanstalk.com']
 ALLOWED_HOSTS = [
+    "*",
     "127.0.0.1",
-    "main2.us-east-1.elasticbeanstalk.com",
-    "postgres-dev.us-east-1.elasticbeanstalk.com",
-    "postgres-dev2.us-east-1.elasticbeanstalk.com",
+    "prod-env.eba-gqpxg4we.us-east-1.elasticbeanstalk.com",
+    "dev-env.eba-gqpxg4we.us-east-1.elasticbeanstalk.com",
 ]
 
 
@@ -127,6 +127,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "": {  # 'root' logger
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": True,
+        },
+    },
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 LANGUAGE_CODE = "en-us"
@@ -162,3 +179,8 @@ EMAIL_HOST_USER = "nyuevents24@gmail.com"
 EMAIL_HOST_PASSWORD = "ogtoqvpmcniroelh"
 
 DEFAULT_FROM_EMAIL = "nyuevents24@gmail.com"
+
+PUSHER_APP_ID = "1773977"
+PUSHER_KEY = "e44f77643020ff731b4f"
+PUSHER_SECRET = "064da109d46ae1fd75ee"
+PUSHER_CLUSTER = "mt1"
