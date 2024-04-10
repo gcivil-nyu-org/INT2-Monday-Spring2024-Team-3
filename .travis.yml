@@ -1,14 +1,14 @@
 dist: jammy
 language: python
 python:
-  - "3.8" 
+  - "3.8"
 
 env:
   - DJANGO_SETTINGS_MODULE="nyu_event.settings"
 
 install:
   - pip install --upgrade setuptools
-  - pip install -r installed_dependencies.txt --extra-index-url https://download.pytorch.org/whl/cpu
+  - pip install -r installed_dependencies.txt
 
 services:
   - postgresql
