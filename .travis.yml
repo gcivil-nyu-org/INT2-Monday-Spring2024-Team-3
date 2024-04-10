@@ -5,6 +5,7 @@ python:
 
 env:
   - DJANGO_SETTINGS_MODULE="nyu_event.settings"
+  - AWS_DEFAULT_REGION="us-east-1"
 
 before_install:
   - python -m pip install --upgrade pip
