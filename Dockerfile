@@ -163,4 +163,4 @@ RUN set -eux; \
 	\
 	pip --version
 
-CMD ["python3"]
+RUN pip install virtualenv
