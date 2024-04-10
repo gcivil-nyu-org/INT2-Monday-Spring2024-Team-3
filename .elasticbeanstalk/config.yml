@@ -2,6 +2,8 @@ branch-defaults:
   develop:
     environment: dev-env
     group_suffix: null
+  fix-ml:
+    environment: dev-env
 global:
   application_name: postgres
   branch: null
