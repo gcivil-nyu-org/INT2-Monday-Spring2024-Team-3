@@ -5,4 +5,6 @@ services:
       - 8000:8000
     volumes:
       - .:/app
+      - ~/.aws/credentials/:/.aws/credentials
+      - ~/.aws/config:/.aws/config
     working_dir: /app
