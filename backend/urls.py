@@ -145,4 +145,5 @@ urlpatterns = [
         views.review_handlers.report_review,
         name="report_review",
     ),
+    path("import_rooms", views.base.import_rooms, name="import_rooms"),
 ]
