@@ -231,7 +231,6 @@ function loadReviews(eventId) {
 }
 
 function addReviewToPage(review) {
-  console.log(review);
   const reviewBox = document.createElement("div");
   reviewBox.className = "review-box";
   const avatarWrapper = document.createElement("div");
@@ -434,24 +433,7 @@ function addReviewToPage(review) {
 
 
   function updateAllReviewsLikesCount(likeCount, Id, isLiked) {
-    fetch(`display-reviews/`, {
-      method: "GET",
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "X-CSRFToken": csrftoken,
-      },
-      credentials: "same-origin",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const reviews = data.reviews;
-        const reviewIds = reviews.map((review) => review.id);
-        console.log(reviewIds);
+        console.log("x")
         let url;
         if (isLiked) {
           url = `display-reviews/${Id}/likes/`;
@@ -487,11 +469,7 @@ function addReviewToPage(review) {
        
             console.error("Error:", error);
           });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
+      }
 
   function updateButtonAppearance() {
     if (isLiked) {
